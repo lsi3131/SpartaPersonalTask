@@ -2,6 +2,8 @@ import sys
 import random
 from enum import Enum
 
+g_logs = []
+
 
 class UpDownType(Enum):
     UP = 1
@@ -19,7 +21,7 @@ def check_num(actual: int, expect: int):
 
 
 def find_num_loop(actual: int):
-    logs = []
+    log = []
     while True:
         num_str = input('숫자를 입력하세요 (1~100) : ')
         num = int(num_str)
@@ -29,24 +31,28 @@ def find_num_loop(actual: int):
 
         result = check_num(actual, num)
         if result == UpDownType.DOWN:
-            logs.append((actual, num, 'Down'))
+            log.append((actual, num, 'Down'))
             print('다운')
         elif result == UpDownType.UP:
-            logs.append((actual, num, 'Up'))
+            log.append((actual, num, 'Up'))
             print('업')
         else:
-            logs.append((actual, num, 'Match'))
+            log.append((actual, num, 'Match'))
             print('맞았습니다')
             break
 
-    return logs
+    return log
 
 
 def run_game(argv):
     while True:
         generated_num = random.randint(1, 100)
-        logs = find_num_loop(generated_num)
-        print(f'시도한 횟수 : {len(logs)}')
+        log = find_num_loop(generated_num)
+
+        g_logs.append(log)
+        g_logs_sorted = sorted(g_logs, key=len)
+        min_attempt, max_attempt = len(g_logs_sorted[0]), len(g_logs_sorted[-1])
+        print(f'시도한 횟수 : {len(log)}, 최소 시도 횟수 : {min_attempt}, 최대 시도 횟수 : {max_attempt}, 총 시도 횟수 : {len(g_logs)}')
 
         while True:
             result = input('다시 하시겠습니까? (y/n) : ')
