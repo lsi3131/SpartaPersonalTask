@@ -25,17 +25,17 @@ class TestUpdown(unittest.TestCase):
         self.assertEqual(FightResult.INVALID, fight('invalid1', 'paper'))
 
     def test_translate(self):
-        self.assertEqual('rock', translate('바위'))
-        self.assertEqual('scissor', translate('가위'))
-        self.assertEqual('paper', translate('보'))
+        self.assertEqual('rock', to_default_language('바위'))
+        self.assertEqual('scissor', to_default_language('가위'))
+        self.assertEqual('paper', to_default_language('보'))
 
-        self.assertEqual('rock', translate('rock'))
-        self.assertEqual('scissor', translate('scissor'))
-        self.assertEqual('paper', translate('paper'))
+        self.assertEqual('rock', to_default_language('rock'))
+        self.assertEqual('scissor', to_default_language('scissor'))
+        self.assertEqual('paper', to_default_language('paper'))
 
-        self.assertEqual('paper', translate('PapeR'))
-        self.assertEqual('rock', translate('RoCK'))
-        self.assertEqual('scissor', translate('SciSSOR'))
+        self.assertEqual('paper', to_default_language('PapeR'))
+        self.assertEqual('rock', to_default_language('RoCK'))
+        self.assertEqual('scissor', to_default_language('SciSSOR'))
 
     def test_example(self):
         pass
