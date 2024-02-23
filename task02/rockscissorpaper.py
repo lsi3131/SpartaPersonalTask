@@ -96,7 +96,7 @@ def fight_loop(computer_choice: str):
 
 def run_game(argv):
     while True:
-        computer_choice = ROCK_SCISSOR_PAPER[random.randint(0, 2)]
+        computer_choice = random.choice(ROCK_SCISSOR_PAPER)
         log = fight_loop(computer_choice)
 
         g_logs.append(log)

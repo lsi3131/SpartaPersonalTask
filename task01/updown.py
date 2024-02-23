@@ -24,10 +24,17 @@ def find_num_loop(actual: int):
     log = []
     while True:
         num_str = input('숫자를 입력하세요 (1~100) : ')
-        num = int(num_str)
-        if num not in range(1, 100 + 1):
-            print(f'입력값(={num})은 유효한 범위 내의 숫자가 아닙니다. 유효한 범위 내의 숫자(1, 100)을 입력하세요')
+
+        if not num_str.isdigit():
+            print(f'입력값(={num_str})은 유효한 범위 내의 숫자가 아닙니다. 유효한 범위 내의 숫자(1, 100)을 입력하세요')
             continue
+
+        num = int(num_str)
+        if 1 <= num <= 100:
+            print(f'입력값(={num_str})은 유효한 범위 내의 숫자가 아닙니다. 유효한 범위 내의 숫자(1, 100)을 입력하세요')
+            continue
+
+        num = int(num_str)
 
         result = check_num(actual, num)
         if result == UpDownType.DOWN:
