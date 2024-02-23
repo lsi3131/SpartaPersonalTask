@@ -30,7 +30,7 @@ def find_num_loop(actual: int):
             continue
 
         num = int(num_str)
-        if 1 <= num <= 100:
+        if not 1 <= num <= 100:
             print(f'입력값(={num_str})은 유효한 범위 내의 숫자가 아닙니다. 유효한 범위 내의 숫자(1, 100)을 입력하세요')
             continue
 
