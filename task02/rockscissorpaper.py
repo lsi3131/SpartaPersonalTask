@@ -73,7 +73,7 @@ def fight(user: str, computer: str):
 def fight_loop(computer_choice: str):
     log = []
     while True:
-        user_choice = input('가위, 바위, 보(rock, scissor, paper) 중 하나를 입력하세요 : ')
+        user_choice = input('가위(scissor), 바위(rock), 보(paper) 중 하나를 입력하세요 : ')
         user_choice_default = to_default_language(user_choice)
         if len(user_choice_default) == 0:
             print(f'입력값(={user_choice})은 유효한 입력이 아닙니다.')
