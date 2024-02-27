@@ -78,7 +78,7 @@
     <div class="row">
         <!--유저 정보-->
         <div class="col">
-            <div style="height: 50vh;">
+            <div style="border-right: 1px solid gray; height: 50vh;">
                 <div class="row">
                     <div class="col">
                         <h1 class="display-3 fw-bold text-body-emphasis">유저</h1>
@@ -135,11 +135,11 @@
     </div>
 </div>
 
-<div class="container-input">
+<div style="border-top: 1px solid gray;" class="container-input">
     <div class="row">
         <div class="col">
-            <form id="input-form-scissor" action="{{ url_for('fight_scissor') }}" method="GET">
-                <button type="submit" class="submit">
+            <form id="input-form-scissor" action="{{ url_for('fight') }}" method="GET">
+                <button type="submit" class="submit" name="scissor" value="1" style="background-color: transparent;">
                     <img id="rcp-scissor" class="pointer"
                          src="{{ url_for('static', filename='image/rcp_scissor.png') }}" alt="">
                 </button>
@@ -147,8 +147,8 @@
             <!-- <img id="rcp-scissor" class="rtan pointer" src="{{ url_for('static', filename='image/rcp_scissor.png') }}" alt=""> -->
         </div>
         <div class="col">
-            <form id="input-form-rock" action="{{ url_for('fight_rock') }}" method="GET">
-                <button type="submit" class="submit">
+            <form id="input-form-rock" action="{{ url_for('fight') }}" method="GET">
+                <button type="submit" class="submit" name="rock" value="1" style="background-color: transparent;">
                     <img id="rcp-rock" class="pointer"
                          src="{{ url_for('static', filename='image/rcp_rock.png') }}" alt="">
                 </button>
@@ -156,8 +156,8 @@
             <!-- <img id="rcp-scissor" class="rtan pointer" src="{{ url_for('static', filename='image/rcp_rock.png') }}" alt=""> -->
         </div>
         <div class="col">
-            <form id="input-form-paper" action="{{ url_for('fight_paper') }}" method="GET">
-                <button type="submit" class="submit">
+            <form id="input-form-paper" action="{{ url_for('fight') }}" method="GET">
+                <button type="submit" class="submit" name="paper" value="1" style="background-color: transparent;">
                     <img id="rcp-paper" class="pointer"
                          src="{{ url_for('static', filename='image/rcp_paper.png') }}" alt="">
                 </button>

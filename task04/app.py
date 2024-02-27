@@ -31,9 +31,24 @@ def home():
     return render_template('index.html', data=context)
 
 
-@app.route('/fight/<rcp_type>')
-def fight(rcp_type):
-    user_choice = int(rcp_type)
+@app.route('/fight', methods=["GET"])
+def fight():
+    rock = request.args.get('rock')
+    scissor = request.args.get('scissor')
+    paper = request.args.get('paper')
+
+    print(f'rock={rock}, scissor={scissor}, paper={paper}')
+
+    if rock:
+        user_choice = RCP_TYPE_ROCK
+    elif scissor:
+        user_choice = RCP_TYPE_SCISSOR
+    elif paper:
+        user_choice = RCP_TYPE_PAPER
+    else:
+        print(f'invalid type has come. rock,scissor,paper are none')
+        return render_template('index.html', data={})
+
     computer_choice = random.choice(
         [RCP_TYPE_ROCK, RCP_TYPE_SCISSOR, RCP_TYPE_PAPER])
 
@@ -47,29 +62,11 @@ def fight(rcp_type):
         "game_result": to_string_game_result(result.result, language=g_language)
     }
 
-    print(result)
-
     return render_template('index.html', data=context)
-
-
-@app.route('/fight_rock')
-def fight_rock():
-    return flask.redirect(flask.url_for('fight', rcp_type=RCP_TYPE_ROCK))
-
-
-@app.route('/fight_scissor')
-def fight_scissor():
-    return flask.redirect(flask.url_for('fight', rcp_type=RCP_TYPE_SCISSOR))
-
-
-@app.route('/fight_paper')
-def fight_paper():
-    return flask.redirect(flask.url_for('fight', rcp_type=RCP_TYPE_PAPER))
 
 
 @app.route('/record', methods=['GET'])
 def record():
-
     max_count = 100
 
     check_filter_win = request.args.get('filter_win')
@@ -80,7 +77,8 @@ def record():
     is_lose = check_filter_lose == '1'
     is_draw = check_filter_draw == '1'
 
-    print(f'check_filter_win={check_filter_win} check_filter_lose={check_filter_lose}, check_filter_draw={check_filter_draw}')
+    print(
+        f'check_filter_win={check_filter_win} check_filter_lose={check_filter_lose}, check_filter_draw={check_filter_draw}')
     print(f'win={is_win} lose={is_lose}, draw={is_draw}')
 
     filter_results = [GAME_RESULT_WIN, GAME_RESULT_LOSE, GAME_RESULT_DRAW]
@@ -92,8 +90,9 @@ def record():
         filter_results.remove(GAME_RESULT_DRAW)
 
     context = []
-    for i, game_record in enumerate(service.find_game_records(reverse=True, sort_option='game_datetime', max_count=max_count,
-                                                              filtered_result=filter_results)):
+    for i, game_record in enumerate(
+            service.find_game_records(reverse=True, sort_option='game_datetime', max_count=max_count,
+                                      filtered_result=filter_results)):
         context.append({
             "num": game_record.id,
             "computer": to_string_rcp(game_record.computer, g_language),
