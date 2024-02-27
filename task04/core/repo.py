@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from domain import *
+from task04.core.domain import *
 
 
 class GameResultRepository(ABC):
@@ -8,7 +8,7 @@ class GameResultRepository(ABC):
         pass
 
     @abstractmethod
-    def find_all(self):
+    def find_all(self) -> list[GameResult]:
         pass
 
     @abstractmethod

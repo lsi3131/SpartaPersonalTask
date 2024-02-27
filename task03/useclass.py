@@ -172,7 +172,7 @@ def create_input_message():
     input_message = '명령에 해당하는 키를 입력하세요('
     for key in g_command_table:
         comment = g_command_table[key][1]
-        input_message += f'{key} : {comment}, '
+        input_message += f'{comment}:{key}, '
     input_message = input_message[:-2] + '): '
     return input_message
 
@@ -188,7 +188,7 @@ def command_loop():
 
 if __name__ == '__main__':
     # 기본 과제
-    print_all()
+    # print_all()
 
     # 추가 과제
     command_loop()

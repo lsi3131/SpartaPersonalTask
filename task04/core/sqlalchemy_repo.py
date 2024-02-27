@@ -3,19 +3,19 @@ import os
 from flask import Flask
 from sqlalchemy import desc
 
-from task04.core.repo.domain import *
+from task04.core.domain import *
 from flask_sqlalchemy import SQLAlchemy
 
-from task04.core.repo.repo import GameResultRepository
+from task04.core.repo import GameResultRepository
 
 g_db = SQLAlchemy()
 
 
 class GameResultAlchemy(g_db.Model):
     id = g_db.Column(g_db.Integer, primary_key=True, autoincrement=True)
-    user = g_db.Column(g_db.String, nullable=False)
-    computer = g_db.Column(g_db.String, nullable=False)
-    result = g_db.Column(g_db.String, nullable=False)
+    user = g_db.Column(g_db.Integer, nullable=False)
+    computer = g_db.Column(g_db.Integer, nullable=False)
+    result = g_db.Column(g_db.Integer, nullable=False)
     game_datetime = g_db.Column(g_db.DateTime, nullable=True)
 
     def __repr__(self):

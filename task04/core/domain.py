@@ -4,8 +4,8 @@ from datetime import datetime
 
 @dataclass
 class GameResult:
-    user: str
-    computer: str
-    result: str
+    user: int
+    computer: int
+    result: int
     game_datetime: datetime
     id: int = 0
