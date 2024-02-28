@@ -30,8 +30,7 @@
     </style>
 </head>
 
-<body>
-<nav class="navbar border-bottom border-bottom-dark d-flex justify-content-space-between md-5" data-bs-theme="dark">
+<nav class="navbar d-flex justify-content-space-between md-5" data-bs-theme="dark">
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -47,13 +46,6 @@
         </div>
     </nav>
 </nav>
-<div class="container d-flex justify-content-space-between">
-    <div class="row">
-        <div class="col">
-            <h1 class="display-5 fw-bold text-body-emphasis">가위, 바위, 보 기록</h1>
-        </div>
-    </div>
-</div>
 <div class="container-input d-flex justify-content-space-between">
     <form id="filter-form" action="{{ url_for('record') }}" method="GET">
         <div class="row justify-content-start">
@@ -85,7 +77,15 @@
                 </div>
             </div>
             <div class="col">
-                <input type="submit" value="Submit" class="btn btn-primary">
+                <div class="input-group">
+                    <!--                    <label class="form-check-label" for="number_of_results">Draw</label>-->
+                    <input type="number" class="form-control" id="number_of_results" name="number_of_results"
+                           value="100">
+<!--                    <label class="form-check-label" for="number_of_results">개</label>-->
+                </div>
+            </div>
+            <div class="col">
+                <input type="submit" value="조회" class="btn btn-primary">
             </div>
         </div>
     </form>
@@ -117,27 +117,27 @@
 <script type="text/javascript" src="../static/record_cookie.js">
 </script>
 <script>
-    const checkBoxs = {
-        "filter_win": "filter_win_check_state",
-        "filter_lose": "filter_lose_check_state",
-        "filter_draw": "filter_draw_check_state",
-    }
-
-    function saveAllCookieCheckboxState() {
-        for (const key in checkBoxs) {
-            saveCookieCheckboxState(document, key, checkBoxs[key])
-        }
-        console.log(document.cookie)
-    }
-
-    function loadAllCookieCheckboxState() {
-        for (const key in checkBoxs) {
-            loadCookieCheckboxState(document, key, checkBoxs[key])
-        }
-    }
-
-    console.log(document.cookie)
-    loadAllCookieCheckboxState()
+    // const checkBoxs = {
+    //     "filter_win": "filter_win_check_state",
+    //     "filter_lose": "filter_lose_check_state",
+    //     "filter_draw": "filter_draw_check_state",
+    // }
+    //
+    // function saveAllCookieCheckboxState() {
+    //     for (const key in checkBoxs) {
+    //         saveCookieCheckboxState(document, key, checkBoxs[key])
+    //     }
+    //     console.log(document.cookie)
+    // }
+    //
+    // function loadAllCookieCheckboxState() {
+    //     for (const key in checkBoxs) {
+    //         loadCookieCheckboxState(document, key, checkBoxs[key])
+    //     }
+    // }
+    //
+    // console.log(document.cookie)
+    // loadAllCookieCheckboxState()
 </script>
 
 

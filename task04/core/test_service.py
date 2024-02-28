@@ -6,26 +6,36 @@ from flask import Flask
 from datetime import datetime
 
 from service import *
+from task04.core.memory_repo import MemoryGameResultRepository
 from task04.core.sqlalchemy_repo import create_sqlalchemy_sqlite, SQLAlchemyGameResultRepository
 from dateutil.relativedelta import relativedelta
 
 
 class TestService(unittest.TestCase):
     def setUp(self):
-        self.app = Flask(__name__)
-        self.basedir = os.path.abspath(os.path.dirname(__file__))
-        self.dbname = 'test_database.db'
-        self.test_dbpath = os.path.join(self.basedir, self.dbname)
+        # self.app = Flask(__name__)
+        # self.basedir = os.path.abspath(os.path.dirname(__file__))
+        # self.dbname = 'test_database.db'
+        # self.test_dbpath = os.path.join(self.basedir, self.dbname)
+        #
+        # if os.path.exists(self.test_dbpath):
+        #     os.remove(self.test_dbpath)
+        #
+        # db = create_sqlalchemy_sqlite(self.app, self.basedir, self.dbname)
+        # self.service = GameService(SQLAlchemyGameResultRepository(db))
 
-        if os.path.exists(self.test_dbpath):
-            os.remove(self.test_dbpath)
-
-        db = create_sqlalchemy_sqlite(self.app, self.basedir, self.dbname)
-        self.service = GameService(SQLAlchemyGameResultRepository(db))
         self.dt_test = datetime(2020, 1, 1, 0, 0, 0)
+        self.service = GameService(MemoryGameResultRepository())
 
     def tearDown(self):
         pass
+
+
+    def test_test(self):
+        b = 1
+        c = 2
+        a = b+ c
+        self.assertEqual(3,a)
 
     def test_fight(self):
         self.assertEqual(GAME_RESULT_DRAW, self.service.fight(RCP_TYPE_ROCK, RCP_TYPE_ROCK, datetime.now()).result)

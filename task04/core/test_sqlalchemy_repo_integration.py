@@ -3,33 +3,28 @@ import os.path
 import unittest
 
 from sqlalchemy_repo import *
+from task04.core.config import AppConfig
 from task04.core.definitions import *
 from task04.core.domain import GameResult
 
 
-class Test(unittest.TestCase):
+class TestIntegration(unittest.TestCase):
     def setUp(self):
-        self.app = Flask(__name__)
-        self.basedir = os.path.abspath(os.path.dirname(__file__))
-        self.dbname = 'test_database.db'
-        self.test_dbpath = os.path.join(self.basedir, self.dbname)
+        dbname = 'test_database.db'
+        self.config = AppConfig(__name__, os.path.abspath(os.path.dirname(__file__)), dbname)
 
-        if os.path.exists(self.test_dbpath):
-            os.remove(self.test_dbpath)
+        if os.path.exists(self.config.dbpath):
+            os.remove(self.config.dbpath)
 
     def tearDown(self):
-        pass
+        if os.path.exists(self.config.dbpath):
+            os.remove(self.config.dbpath)
 
     def test_db_file_should_deleted(self):
-        self.assertFalse(os.path.exists(self.test_dbpath))
-
-    def test_create_sqlalchemy_sqlite(self):
-        db = create_sqlalchemy_sqlite(self.app, self.basedir, self.dbname)
-        self.assertIsNotNone(db)
+        self.assertFalse(os.path.exists(self.config.dbpath))
 
     def test_save_and_find_all(self):
-        db = create_sqlalchemy_sqlite(self.app, self.basedir, self.dbname)
-        repo = SQLAlchemyGameResultRepository(db)
+        repo = self.config.game_result_repository()
 
         dt1 = datetime(2024, 1, 1, 0, 0, 30)
         dt2 = datetime(2024, 2, 1, 0, 0, 20)
@@ -56,8 +51,7 @@ class Test(unittest.TestCase):
                                     game_datetime=dt1), to_data)
 
     def test_filter_by_result(self):
-        db = create_sqlalchemy_sqlite(self.app, self.basedir, self.dbname)
-        repo = SQLAlchemyGameResultRepository(db)
+        repo = self.config.game_result_repository()
 
         dt1 = datetime(2024, 1, 1, 0, 0, 30)
         save_datas = [
@@ -82,8 +76,7 @@ class Test(unittest.TestCase):
         self.assertEqual(save_datas, repo.filter_by_result([GAME_RESULT_WIN, GAME_RESULT_DRAW, GAME_RESULT_LOSE]))
 
     def test_filter_by_max_count(self):
-        db = create_sqlalchemy_sqlite(self.app, self.basedir, self.dbname)
-        repo = SQLAlchemyGameResultRepository(db)
+        repo = self.config.game_result_repository()
 
         dt1 = datetime(2024, 1, 1, 0, 0, 30)
         for d in range(1, 21):

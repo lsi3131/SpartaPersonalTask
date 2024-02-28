@@ -6,13 +6,12 @@ import random
 from flask import Flask, render_template, request
 from datetime import datetime
 
+from task04.core.config import AppConfig
 from task04.core.definitions import *
-from task04.core.service import GameService
-from task04.core.sqlalchemy_repo import create_sqlalchemy_sqlite, SQLAlchemyGameResultRepository
 
-app = Flask(__name__)
-basedir = os.path.abspath(os.path.dirname(__file__))
-db_wrapper = create_sqlalchemy_sqlite(app, basedir, 'database.db')
+config = AppConfig(app_name=__name__, basedir_path=os.path.abspath(os.path.dirname(__file__)), db_name='database.db')
+app = config.app
+service = config.get_game_result_service()
 
 rcp_image_url_table = {
     RCP_TYPE_ROCK: "../static/image/rcp_rock.png",
@@ -20,8 +19,6 @@ rcp_image_url_table = {
     RCP_TYPE_PAPER: "../static/image/rcp_paper.png",
 }
 
-repo = SQLAlchemyGameResultRepository(db_wrapper)
-service = GameService(repo)
 g_language = LANGUAGE_TYPE_KOR
 
 
@@ -31,11 +28,15 @@ def home():
     return render_template('index.html', data=context)
 
 
-@app.route('/fight', methods=["GET"])
+@app.route('/fight', methods=["POST"])
 def fight():
-    rock = request.args.get('rock')
-    scissor = request.args.get('scissor')
-    paper = request.args.get('paper')
+    rock = request.form.get('rock')
+    scissor = request.form.get('scissor')
+    paper = request.form.get('paper')
+
+    # rock = request.args.get('rock')
+    # scissor = request.args.get('scissor')
+    # paper = request.args.get('paper')
 
     print(f'rock={rock}, scissor={scissor}, paper={paper}')
 
@@ -67,11 +68,11 @@ def fight():
 
 @app.route('/record', methods=['GET'])
 def record():
-    max_count = 100
-
     check_filter_win = request.args.get('filter_win')
     check_filter_lose = request.args.get('filter_lose')
     check_filter_draw = request.args.get('filter_draw')
+    max_count = request.args.get('number_of_results',default=0)
+    max_count = int(max_count)
 
     is_win = check_filter_win == '1'
     is_lose = check_filter_lose == '1'
