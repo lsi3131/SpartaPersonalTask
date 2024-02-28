@@ -82,6 +82,7 @@ class TestService(unittest.TestCase):
         self.assert_equal_without_id(GameResult(RCP_TYPE_ROCK, RCP_TYPE_ROCK, GAME_RESULT_DRAW, dt1),
                                      records[2])
 
+    def test_filter(self):
         pass
 
     def assert_equal_without_id(self, expect: GameResult, actual: GameResult):
