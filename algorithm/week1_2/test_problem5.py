@@ -9,13 +9,15 @@ import string
 
 def solution(array, n):
     counter = collections.Counter(array)
+    print(counter)
     return counter[n]
 
 
 class TestProblem(unittest.TestCase):
     def test_example1(self):
-        self.assertEqual(2, solution([1, 1, 2, 3, 4, 5], 1))
+        self.assertEqual(2, solution([1, 1, 1, 2, 3, 4, 5], 1))
         self.assertEqual(0, solution([0, 2, 3, 4], 1))
+
 
 
 if __name__ == '__main__':
